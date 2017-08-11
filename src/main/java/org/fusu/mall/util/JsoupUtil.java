@@ -1,6 +1,7 @@
 package org.fusu.mall.util;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.fusu.mall.bean.ItemBean;
@@ -40,13 +41,26 @@ public class JsoupUtil {
 		for (Element link : links) {
 			String href = link.attr("href");
 			int index = href.indexOf("item.jd.com");
-			if(index!=-1) {
-				list.add(href);	
-			}else {
-				continue;	
+			if (index != -1) {
+				int index2 = href.indexOf("https:");
+				if (index2 == -1) {
+					href = "https:" + href;
+					list.add(href);
+				}
+				list.add(href);
+			} else {
+				continue;
 			}
 		}
-		return list;
+		LinkedHashSet<String> set = new LinkedHashSet<String>(list);
+		ArrayList<String> list2 = new ArrayList<String>(set);
+		return list2;
+	}
+
+	public static List<String> getLinkedHashSet(List<String> list) {
+		LinkedHashSet<String> set = new LinkedHashSet<String>(list);
+		ArrayList<String> list2 = new ArrayList<String>(set);
+		return list2;
 	}
 
 	public static String getAMetaK(String html) {
@@ -73,7 +87,8 @@ public class JsoupUtil {
 		}
 		return "";
 	}
-	public static ItemBean getItemBean(String html,String url) {
+
+	public static ItemBean getItemBean(String html, String url) {
 		Document doc = getDoc(html);
 		ItemBean itemBean = new ItemBean();
 		itemBean.setTitle(doc.title());

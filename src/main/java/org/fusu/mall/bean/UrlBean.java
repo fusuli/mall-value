@@ -12,10 +12,18 @@ public class UrlBean {
 
 	@Id
 	@GeneratedValue
+
 	@Column(name = "urlid")
 	private int urlid;
+
 	@Column(name = "url")
 	private String url;
+
+	@Column(name = "status")
+	private int status;
+
+	@Column(name = "update_time")
+	private int update_time;
 
 	public UrlBean() {
 	}
@@ -44,4 +52,21 @@ public class UrlBean {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(int update_time) {
+		this.update_time = update_time;
+	}
+	
 }

@@ -19,15 +19,15 @@ public class UrlDao implements IUrlDao {
 				UrlBean urlBean = new UrlBean(); // 创建对象
 				// 循环获取对象
 				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i) != null) {
+					if (list.get(i) != null && selectUrl(list.get(i))) {
 						System.out.println(list.get(i));
 						urlBean.setUrl(list.get(i)); // 获取
 						session.save(urlBean); // 保存对象
 						// 批插入的对象立即写入数据库并释放内存
-						 if (i % 1 == 0) {
-						 session.flush();
-						 session.clear();
-						 }
+						if (i % 1 == 0) {
+							session.flush();
+							session.clear();
+						}
 					} else {
 						continue;
 					}
@@ -36,10 +36,30 @@ public class UrlDao implements IUrlDao {
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-				 session.getTransaction().rollback(); // 出错将回滚事物
+				session.getTransaction().rollback(); // 出错将回滚事物
 			} finally {
 				HibernateUtil.close(session);
 			}
 		}
 	}
+
+	@Override
+	public boolean selectUrl(String url) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		String url2 = null;
+		try {
+			session = HibernateUtil.openSession();
+			url2 = (String) session.createQuery("from mall_url where url = ?").getQueryString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close(session);
+		}
+		if (url != url2) {
+			return true;
+		}
+		return false;
+	}
+
 }
