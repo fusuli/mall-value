@@ -7,22 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mall_url")
+@Table(name = "URLBEAN")
 public class UrlBean {
 
 	@Id
 	@GeneratedValue
 
-	@Column(name = "urlid")
+	@Column(name = "URLID")
 	private int urlid;
 
-	@Column(name = "url")
+	@Column(name = "URL")
 	private String url;
 
-	@Column(name = "status")
+	@Column(name = "STATUS")
 	private int status;
 
-	@Column(name = "update_time")
+	@Column(name = "UPDATE_TIME")
 	private int update_time;
 
 	public UrlBean() {

@@ -21,7 +21,7 @@
 		<!-- 会自动完成类到数据表的转换 -->
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- 加入实体类的映射文件 -->	
-		<mapping resource="src/main/java/org/fusu/mall/bean/ItemBean.hbm.xml"/>
-		<mapping resource="src/main/java/org/fusu/mall/bean/UrlBean.hbm.xml"/>
+		<mapping resource="org/fusu/mall/bean/ItemBean.hbm.xml"/>
+		<mapping resource="org/fusu/mall/bean/UrlBean.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

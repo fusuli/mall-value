@@ -7,23 +7,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mall_html")
+@Table(name = "ITEMBEAN")
 public class ItemBean {
 	@Id
 	@GeneratedValue
-	@Column(name = "itemid")
+	@Column(name = "ITEMID")
 	private int itemid;
 
-	@Column(name = "title")
+	@Column(name = "TITLE")
 	private String title;
 
-	@Column(name = "keywords")
+	@Column(name = "KEYWORDS")
 	private String keywords;
 
-	@Column(name = "description")
+	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(name = "url")
+	@Column(name = "URL")
 	private String url;
 
 	public ItemBean() {
