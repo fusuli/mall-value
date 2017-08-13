@@ -21,7 +21,8 @@ public class App {
 	public static void main(String[] args) throws IOException {
 		String url = "https://shouji.jd.com/";
 		try {
-			go(url);
+//			goUrls(url);
+			goItem(url);
 			
 		} catch (Exception e) {
 			// TODO: handle exception

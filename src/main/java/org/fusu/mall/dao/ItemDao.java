@@ -1,6 +1,5 @@
 package org.fusu.mall.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.fusu.mall.bean.ItemBean;
@@ -11,22 +10,22 @@ import org.hibernate.Session;
 
 public class ItemDao implements IItemDao {
 
-//	@Override
-//	public void addItem(ItemBean itemBean) {
-//		// TODO Auto-generated method stub
-//		Session session = null;
-//		try {
-//			session = HibernateUtil.openSession();
-//			session.beginTransaction();
-//			session.save(itemBean);
-//			session.getTransaction().commit();
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		} finally {
-//			HibernateUtil.close(session);
-//		}
-//	}
+	// @Override
+	// public void addItem(ItemBean itemBean) {
+	// // TODO Auto-generated method stub
+	// Session session = null;
+	// try {
+	// session = HibernateUtil.openSession();
+	// session.beginTransaction();
+	// session.save(itemBean);
+	// session.getTransaction().commit();
+	// } catch (Exception e) {
+	// // TODO: handle exception
+	// e.printStackTrace();
+	// } finally {
+	// HibernateUtil.close(session);
+	// }
+	// }
 	@Override
 	public void addItem(ItemBean itemBean) {
 		// TODO Auto-generated method stub
@@ -34,12 +33,12 @@ public class ItemDao implements IItemDao {
 		try {
 			session = HibernateUtil.openSession();
 			session.beginTransaction();
-			if(selectItem(itemBean.getTitle().trim())) {
+			if (itemBean.getTitle().trim() != null && selectItem(itemBean.getTitle().trim())) {
+				System.out.println("item已经存在");
+			} else {
 				session.save(itemBean);
-			}else {
-			System.out.println("item已经存在");
 			}
-//			session.save(itemBean);
+			// session.save(itemBean);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -48,21 +47,17 @@ public class ItemDao implements IItemDao {
 			HibernateUtil.close(session);
 		}
 	}
+
 	public boolean selectItem(String title) {
 		// TODO Auto-generated method stub
 		Session session = null;
 		try {
 			session = HibernateUtil.openSession();
 			Query query = session.createQuery("from ItemBean where title = ?");
+			query.setString(0, title);
 			@SuppressWarnings("unchecked")
 			List<UrlBean> urlBean = query.list();
-			Iterator<UrlBean> it = urlBean.iterator();
-			if (it.hasNext()) {
-				if (it.next().equals(null)) {
-					return false;
-				}
-				return true;
-			}
+			return urlBean.size() > 0 ? false : true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
