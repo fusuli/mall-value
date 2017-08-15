@@ -9,7 +9,8 @@ public class ItemDaoTest {
 	@Test
 	public void testSelectUrl() {
 		ItemDao itemDao = new ItemDao();
-		boolean b = itemDao.selectItem("手机_手机通讯_运营商手机_手机配件");
+		String title = "手机_手机通讯_运营商手机_手机配件-京";
+		boolean b = itemDao.selectItem(title);
 		System.out.println(b);
 		assertNotNull(b);
 	}

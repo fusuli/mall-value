@@ -21,9 +21,7 @@ public class App {
 	public static void main(String[] args) throws IOException {
 		String url = "https://shouji.jd.com/";
 		try {
-//			goUrls(url);
-			goItem(url);
-			
+			go(url);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -38,10 +36,16 @@ public class App {
 			List<UrlBean> urlList = urlDao.getAllUrl();
 			for (Iterator<UrlBean> it = urlList.iterator(); it.hasNext();) {
 				UrlBean urlBean = (UrlBean) it.next();
-				goItem(urlBean.getUrl());
-				goUrls(urlBean.getUrl());
+				if (urlBean.getStatus() == 0) {
+					goItem(urlBean.getUrl());
+					goUrls(urlBean.getUrl());
+					urlDao.updateUrlStatus(urlBean.getUrl());
+				}else if  (urlBean.getStatus() == 100) {
+					System.out.println("url已经访问");
+					continue;
+				}
 				i++;
-				System.out.println(i);
+				System.out.println("正在访问第" + i + "条URL ："+urlBean.getUrl());
 				Thread.sleep(2000);
 			}
 		} while (true);
@@ -68,20 +72,6 @@ public class App {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-
-	private static void getAllUrl() {
-		try {
-			IUrlDao urlDao = new UrlDao();
-			List<UrlBean> urlList = urlDao.getAllUrl();
-			for (Iterator<UrlBean> it = urlList.iterator(); it.hasNext();) {
-				UrlBean urlBean = (UrlBean) it.next();
-				System.out.println(urlBean.getUrlid());
-				System.out.println(urlBean.getUrl());
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 }

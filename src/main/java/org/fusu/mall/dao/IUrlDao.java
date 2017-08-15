@@ -12,4 +12,6 @@ public interface IUrlDao {
 	public void testQuery();
 	
 	public boolean selectUrl(String url);
+	
+	public void updateUrlStatus(String url);
 }

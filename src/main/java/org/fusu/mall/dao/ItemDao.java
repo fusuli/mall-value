@@ -33,12 +33,11 @@ public class ItemDao implements IItemDao {
 		try {
 			session = HibernateUtil.openSession();
 			session.beginTransaction();
-			if (itemBean.getTitle().trim() != null && selectItem(itemBean.getTitle().trim())) {
-				System.out.println("item已经存在");
-			} else {
+			if(selectItem(itemBean.getTitle())) {
 				session.save(itemBean);
+			}else {
+				System.out.println("item已存在");
 			}
-			// session.save(itemBean);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.fusu.mall.bean.ItemBean;
-import org.fusu.mall.bean.UrlBean;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,7 +30,7 @@ public class JsoupUtil {
 		return doc.title();
 	}
 
-	/*
+	/**
 	 * 获取网页title
 	 * 
 	 * @param html
@@ -52,7 +51,7 @@ public class JsoupUtil {
 		List<String> list = new ArrayList<String>();
 		Elements links = getDoc(body).select("a");
 		for (Element link : links) {
-			String href = link.attr("href");
+			String href = link.attr("href").trim();
 			int index = href.indexOf("item.jd.com");
 			if (index != -1) {
 				int index2 = href.indexOf("https:");
@@ -117,33 +116,6 @@ public class JsoupUtil {
 			}
 		}
 		return "";
-	}
-
-	/**
-	 * 将list放入UrlBean类中
-	 * @param list
-	 * @return
-	 */
-	public static UrlBean getUrlBean(List<String> list) {
-		UrlBean urlBean = new UrlBean();
-		if (list != null && list.size() > 0) {
-			try {
-				// 循环获取对象
-				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i) != null) {
-						urlBean.setUrl(list.get(i)); // 获取
-					} else {
-						continue;
-					}
-				}
-				return urlBean;
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			} finally {
-			}
-		}
-		return urlBean;
 	}
 
 	/**

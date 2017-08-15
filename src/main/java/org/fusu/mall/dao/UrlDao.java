@@ -8,13 +8,14 @@ import org.fusu.mall.util.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class UrlDao implements IUrlDao {
 
 	@Override
 	public void addUrl(List<String> list) {
 		// TODO Auto-generated method stub
 		Session session = null;
-		int a=0;
 		if (list != null && list.size() > 0) {
 			try {
 				session = HibernateUtil.openSession(); // 获取Session
@@ -22,11 +23,14 @@ public class UrlDao implements IUrlDao {
 				UrlBean urlBean = new UrlBean(); // 创建对象
 				// 循环获取对象
 				for (int i = 0; i < list.size(); i++) {
-					if (list.get(i) != null && selectUrl(list.get(i))) {
-//						&& selectUrl(list.get(i))
-						urlBean.setUrl(list.get(i)); // 获取
+					String nowUrl = list.get(i).trim();
+					boolean isSave = selectUrl(nowUrl);
+					if (!StringUtils.isEmpty(nowUrl) && isSave == false) {
+						// && selectUrl(list.get(i))
+						urlBean.setUrl(nowUrl); // 获取
+						urlBean.setStatus(0);
 						session.save(urlBean); // 保存对象
-						a = session.hashCode();
+						System.out.println("url插入成功" + i);
 						// 批插入的对象立即写入数据库并释放内存
 						if (i % 1 == 0) {
 							session.flush();
@@ -37,7 +41,6 @@ public class UrlDao implements IUrlDao {
 						continue;
 					}
 				}
-				System.out.println(a);
 				session.getTransaction().commit(); // 提交事物
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -76,15 +79,9 @@ public class UrlDao implements IUrlDao {
 		Session session = null;
 		try {
 			session = HibernateUtil.openSession();
-
 			// Query 查询语句，select * 可以省略，也可以大小写不论，
 			// 但是，from 后面的就一定要大小写区分，因为它后面接的是 实体类
 			Query query = session.createQuery("from UrlBean");
-
-			// 分页
-			// query.setFirstResult(0);//从第零条记录开始
-			// query.setMaxResults(200);//每页2条记录
-
 			// 返回一个List集合，hibernate的优点就是，不用再向集合中add这样添加元素了，Query已经自动提交了
 			@SuppressWarnings("unchecked")
 			List<UrlBean> urlList = query.list();
@@ -102,7 +99,7 @@ public class UrlDao implements IUrlDao {
 		}
 	}
 
-	public  boolean selectUrl(String url) {
+	public boolean selectUrl(String url) {
 		// TODO Auto-generated method stub
 		Session session = null;
 		try {
@@ -111,13 +108,30 @@ public class UrlDao implements IUrlDao {
 			query.setString(0, url);
 			@SuppressWarnings("unchecked")
 			List<UrlBean> urlBean = query.list();
-			return urlBean.size()>0?false:true;
+			return urlBean.size() > 0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			HibernateUtil.close(session);
 		}
-		return true;
+		return false;
+	}
+
+	public void updateUrlStatus(String url) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		try {
+			session = HibernateUtil.openSession();
+			session.beginTransaction();
+			Query query = session.createQuery("update UrlBean u set u.status = '100' where url = ?");
+			query.setParameter(0, url);
+			query.executeUpdate();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close(session);
+		}
 	}
 
 }
