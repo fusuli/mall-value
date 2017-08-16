@@ -3,19 +3,19 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2017-8-10 20:41:39 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="org.fusu.mall.bean.UrlBean" table="URLBEAN">
-        <id name="urlid" type="int">
-            <column name="URLID" />
-            <generator class="assigned" />
-        </id>
-        <property name="url" type="java.lang.String">
-            <column name="URL" />
-        </property>
-        <property name="status" type="int">
-            <column name="STATUS" />
-        </property>
-        <property name="update_time" type="int">
-            <column name="UPDATE_TIME" />
-        </property>
-    </class>
+	<class name="org.fusu.mall.bean.UrlBean" table="URLBEAN">
+		<id name="urlid" type="int">
+			<column name="URLID" />
+			<generator class="assigned" />
+		</id>
+		<property name="url" type="java.lang.String">
+			<column name="URL" />
+		</property>
+		<property name="status" type="int">
+			<column name="STATUS" />
+		</property>
+		<property name="update_time" type="int">
+			<column name="UPDATE_TIME" />
+		</property>
+	</class>
 </hibernate-mapping>

@@ -10,32 +10,15 @@ import org.hibernate.Session;
 
 public class ItemDao implements IItemDao {
 
-	// @Override
-	// public void addItem(ItemBean itemBean) {
-	// // TODO Auto-generated method stub
-	// Session session = null;
-	// try {
-	// session = HibernateUtil.openSession();
-	// session.beginTransaction();
-	// session.save(itemBean);
-	// session.getTransaction().commit();
-	// } catch (Exception e) {
-	// // TODO: handle exception
-	// e.printStackTrace();
-	// } finally {
-	// HibernateUtil.close(session);
-	// }
-	// }
-	@Override
 	public void addItem(ItemBean itemBean) {
 		// TODO Auto-generated method stub
 		Session session = null;
 		try {
 			session = HibernateUtil.openSession();
 			session.beginTransaction();
-			if(selectItem(itemBean.getTitle())) {
+			if (selectItem(itemBean.getTitle())) {
 				session.save(itemBean);
-			}else {
+			} else {
 				System.out.println("item已存在");
 			}
 			session.getTransaction().commit();

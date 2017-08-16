@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public class UrlDao implements IUrlDao {
 
-	@Override
 	public void addUrl(List<String> list) {
 		// TODO Auto-generated method stub
 		Session session = null;
@@ -53,7 +52,6 @@ public class UrlDao implements IUrlDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<UrlBean> getAllUrl() {
 		// TODO Auto-generated method stub
 		Session session = null;
