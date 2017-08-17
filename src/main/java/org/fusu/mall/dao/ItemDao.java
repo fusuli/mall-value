@@ -19,7 +19,7 @@ public class ItemDao implements IItemDao {
 			if (selectItem(itemBean.getTitle())) {
 				session.save(itemBean);
 			} else {
-				System.out.println("item已存在");
+				System.out.println("item already exists!!!");
 			}
 			session.getTransaction().commit();
 		} catch (Exception e) {

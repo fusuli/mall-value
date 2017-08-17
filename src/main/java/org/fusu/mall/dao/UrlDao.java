@@ -29,14 +29,14 @@ public class UrlDao implements IUrlDao {
 						urlBean.setUrl(nowUrl); // 获取
 						urlBean.setStatus(0);
 						session.save(urlBean); // 保存对象
-						System.out.println("url插入成功" + i);
+						System.out.println("URL added successfully" + i);
 						// 批插入的对象立即写入数据库并释放内存
 						if (i % 1 == 0) {
 							session.flush();
 							session.clear();
 						}
 					} else {
-						System.out.println("url已经存在");
+						System.out.println("URL already exists!!!");
 						continue;
 					}
 				}
@@ -60,7 +60,9 @@ public class UrlDao implements IUrlDao {
 			session = HibernateUtil.openSession();
 			// Query 查询语句，select * 可以省略，也可以大小写不论，
 			// 但是，from 后面的就一定要大小写区分，因为它后面接的是 实体类
-			Query query = session.createQuery("from UrlBean");
+			Query query = session.createQuery("from UrlBean where status = 0");
+			query.setFirstResult(0);
+			query.setMaxResults(100);
 			// 返回一个List集合，hibernate的优点就是，不用再向集合中add这样添加元素了，Query已经自动提交了
 			urlList = query.list();
 			session.beginTransaction().commit();

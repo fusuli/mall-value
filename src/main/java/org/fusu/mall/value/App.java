@@ -41,11 +41,11 @@ public class App {
 					goUrls(urlBean.getUrl());
 					urlDao.updateUrlStatus(urlBean.getUrl());
 				}else if  (urlBean.getStatus() == 100) {
-					System.out.println("url已经访问");
+					System.out.println("URL has been accessed!!!");
 					continue;
 				}
 				i++;
-				System.out.println("正在访问第" + i + "条URL ："+urlBean.getUrl());
+				System.out.println("Accessing article " + i + " URL ："+urlBean.getUrl());
 				Thread.sleep(2000);
 			}
 		} while (true);
