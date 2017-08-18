@@ -36,7 +36,7 @@ public class UrlDao implements IUrlDao {
 							session.clear();
 						}
 					} else {
-						System.out.println("URL already exists!!!");
+						System.err.println("URL already exists!!!");
 						continue;
 					}
 				}

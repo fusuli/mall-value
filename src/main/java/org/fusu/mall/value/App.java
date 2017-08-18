@@ -28,8 +28,7 @@ public class App {
 	}
 
 	private static void go(String url) throws InterruptedException {
-		goUrls(url);
-		goItem(url);
+		goHtml(url);
 		do {
 			int i = 0;
 			IUrlDao urlDao = new UrlDao();
@@ -37,8 +36,7 @@ public class App {
 			for (Iterator<UrlBean> it = urlList.iterator(); it.hasNext();) {
 				UrlBean urlBean = (UrlBean) it.next();
 				if (urlBean.getStatus() == 0) {
-					goItem(urlBean.getUrl());
-					goUrls(urlBean.getUrl());
+					goHtml(url);
 					urlDao.updateUrlStatus(urlBean.getUrl());
 				}else if  (urlBean.getStatus() == 100) {
 					System.out.println("URL has been accessed!!!");
@@ -51,21 +49,14 @@ public class App {
 		} while (true);
 	}
 
-	private static void goUrls(String url) {
+	private static void goHtml(String url) {
 		try {
 			String body = HttpUtil.getString(url);
+			
 			List<String> list = JsoupUtil.getALink(body);
 			IUrlDao urlDao = new UrlDao();
 			urlDao.addUrl(list);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	private static void goItem(String url) {
-		String body;
-		try {
-			body = HttpUtil.getString(url);
+			
 			ItemBean itemBean = JsoupUtil.getItemBean(body, url);
 			IItemDao itemDao = new ItemDao();
 			itemDao.addItem(itemBean);
@@ -74,4 +65,28 @@ public class App {
 			e.printStackTrace();
 		}
 	}
+	
+//	private static void goUrls(String url) {
+//		try {
+//			String body = HttpUtil.getString(url);
+//			List<String> list = JsoupUtil.getALink(body);
+//			IUrlDao urlDao = new UrlDao();
+//			urlDao.addUrl(list);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//	}
+//
+//	private static void goItem(String url) {
+//		String body;
+//		try {
+//			body = HttpUtil.getString(url);
+//			ItemBean itemBean = JsoupUtil.getItemBean(body, url);
+//			IItemDao itemDao = new ItemDao();
+//			itemDao.addItem(itemBean);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }
