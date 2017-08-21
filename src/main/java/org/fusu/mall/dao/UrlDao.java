@@ -1,6 +1,5 @@
 package org.fusu.mall.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.fusu.mall.bean.UrlBean;
@@ -26,8 +25,9 @@ public class UrlDao implements IUrlDao {
 					boolean isSave = selectUrl(nowUrl);
 					if (!StringUtils.isEmpty(nowUrl) && isSave == false) {
 						// && selectUrl(list.get(i))
-						urlBean.setUrl(nowUrl); // 获取
+						urlBean.setUrl(StringUtils.trim(nowUrl)); // 获取
 						urlBean.setStatus(0);
+						
 						session.save(urlBean); // 保存对象
 						System.out.println("URL added successfully" + i);
 						// 批插入的对象立即写入数据库并释放内存
@@ -75,31 +75,8 @@ public class UrlDao implements IUrlDao {
 		return urlList;
 	}
 
-	public void testQuery() {
-		Session session = null;
-		try {
-			session = HibernateUtil.openSession();
-			// Query 查询语句，select * 可以省略，也可以大小写不论，
-			// 但是，from 后面的就一定要大小写区分，因为它后面接的是 实体类
-			Query query = session.createQuery("from UrlBean");
-			// 返回一个List集合，hibernate的优点就是，不用再向集合中add这样添加元素了，Query已经自动提交了
-			@SuppressWarnings("unchecked")
-			List<UrlBean> urlList = query.list();
-			for (Iterator<UrlBean> it = urlList.iterator(); it.hasNext();) {
-				UrlBean urlBean = (UrlBean) it.next();
-				System.out.println(urlBean.getUrlid());
-				System.out.println(urlBean.getUrl());
-			}
-			session.beginTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.beginTransaction().rollback();
-		} finally {
-			HibernateUtil.close(session);
-		}
-	}
-
 	public boolean selectUrl(String url) {
+		url = StringUtils.trim(url);
 		// TODO Auto-generated method stub
 		Session session = null;
 		try {
@@ -114,7 +91,7 @@ public class UrlDao implements IUrlDao {
 		} finally {
 			HibernateUtil.close(session);
 		}
-		return false;
+		return true;
 	}
 
 	public void updateUrlStatus(String url) {

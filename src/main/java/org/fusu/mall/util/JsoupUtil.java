@@ -27,7 +27,7 @@ public class JsoupUtil {
 	}
 
 	public static String getTitle(Document doc) {
-		return doc.title();
+		return doc.title().trim();
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class JsoupUtil {
 	 * @return
 	 */
 	public static String getTitle(String html) {
-		return getDoc(html).title();
+		return getDoc(html).title().trim();
 	}
 
 	/**
@@ -54,19 +54,22 @@ public class JsoupUtil {
 			String href = link.attr("href").trim();
 			int index = href.indexOf("item.jd.com");
 			if (index != -1) {
-				int index2 = href.indexOf("https:");
+				int index2 = href.indexOf("http:");
 				if (index2 == -1) {
-					href = "https:" + href;
-					list.add(href);
+					int index3 = href.indexOf("https:");
+					if(index3 == -1) {
+						href = "https:" + href;
+						list.add(href.trim());
+					}
+				}else {
+					continue;
 				}
-				list.add(href);
+				list.add(href.trim());
 			} else {
 				continue;
 			}
 		}
-		LinkedHashSet<String> set = new LinkedHashSet<String>(list);
-		ArrayList<String> list2 = new ArrayList<String>(set);
-		return list2;
+		return getLinkedHashSet(list);
 	}
 
 	/**
@@ -94,7 +97,7 @@ public class JsoupUtil {
 			String name = meta.attr("name");
 			if (name.equals("keywords")) {
 				content = meta.attr("content");
-				return content;
+				return content.trim();
 			}
 		}
 		return "";
@@ -111,8 +114,8 @@ public class JsoupUtil {
 		for (Element meta : metas) {
 			String name = meta.attr("name");
 			if (name.equals("description")) {
-				String content = meta.attr("content");
-				return content;
+				String description = meta.attr("content");
+				return description.trim();
 			}
 		}
 		return "";
@@ -131,7 +134,7 @@ public class JsoupUtil {
 		itemBean.setTitle(doc.title());
 		itemBean.setKeywords(getAMetaK(body));
 		itemBean.setDescription(getAMetaD(body));
-		itemBean.setUrl(url);
+		itemBean.setUrl(url.trim());
 		return itemBean;
 	}
 }

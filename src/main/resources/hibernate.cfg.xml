@@ -8,7 +8,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         
         <!-- 数据库的连接字符串和用户名密码 -->
-        <property name="hibernate.connection.url">jdbc:mysql:///test</property>
+        <property name="hibernate.connection.url">jdbc:mysql:///test1</property>
         <property name="hibernate.connection.password">root</property>  
         <property name="hibernate.connection.username">root</property>
         

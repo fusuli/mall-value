@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class DbUtil {
 	public static Connection getConnection() throws SQLException {
 		Connection con = null;
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", 
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1", 
 				"root", "root");
 		return con;
 	}

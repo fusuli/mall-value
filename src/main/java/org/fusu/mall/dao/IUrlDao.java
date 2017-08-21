@@ -9,8 +9,6 @@ public interface IUrlDao {
 	
 	public List<UrlBean> getAllUrl();
 	
-	public void testQuery();
-	
 	public boolean selectUrl(String url);
 	
 	public void updateUrlStatus(String url);

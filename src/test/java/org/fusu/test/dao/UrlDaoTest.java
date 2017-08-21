@@ -10,7 +10,7 @@ public class UrlDaoTest {
 	@Test
 	public void testSelectUrl() {
 		UrlDao urlDao = new UrlDao();
-		boolean b = urlDao.selectUrl("https://item.jd.com/3458059.html");
+		boolean b = urlDao.selectUrl("https://item.jd.com/10645589188.html");
 		System.out.println(b);
 		assertNotNull(b);
 	}
